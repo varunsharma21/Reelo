@@ -1,7 +1,7 @@
-import React, { lazy, useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Papa from "papaparse";
 
-import DummyData from "./assets/nasa-exoplanet-data.csv";
+import DummyData from "./assets/nasa-exoplanet-data-updated.csv";
 // import DummyData from "./assets/dummy-data.csv";
 import Header from "./components/Header";
 
@@ -13,6 +13,7 @@ const App = () => {
   let discoveryMethod = new Set();
   let discoveryYear = new Set();
   let discoveryFacility = new Set();
+  let dummyDataSet = new Set();
 
   const fetchParsedData = useCallback(async () => {
     Papa.parse(DummyData, {
@@ -20,7 +21,7 @@ const App = () => {
       delimiter: ",",
       complete: (result) => {
         setDummyData(result.data);
-        console.log(result.data);
+        // console.log(result.data);
       },
     });
   }, []);
@@ -29,18 +30,28 @@ const App = () => {
     fetchParsedData();
   }, [fetchParsedData]);
 
-  for (let i = 0; i < dummyData.length; i++) {
-    planetName.add(dummyData[i][0]);
-    hostName.add(dummyData[i][1]);
-    discoveryMethod.add(dummyData[i][2]);
+  function removeDuplicates(array) {
+    const uniqueSet = new Set();
+
+    return array.filter((item) => {
+      const serialized = JSON.stringify(item);
+      if (!uniqueSet.has(serialized)) {
+        uniqueSet.add(serialized);
+        return true;
+      }
+      return false;
+    });
   }
 
-  for (let i = 0; i < dummyData.length; i++) {
-    discoveryYear.add(dummyData[i][3]);
-  }
+  const uniqueDummyDataArray = removeDuplicates(dummyData);
+  // console.log(uniqueDummyDataArray);
 
-  for (let i = 0; i < dummyData.length; i++) {
-    discoveryFacility.add(dummyData[i][4]);
+  for (let i = 0; i < uniqueDummyDataArray.length; i++) {
+    planetName.add(uniqueDummyDataArray[i][0]);
+    hostName.add(uniqueDummyDataArray[i][1]);
+    discoveryMethod.add(uniqueDummyDataArray[i][2]);
+    discoveryYear.add(uniqueDummyDataArray[i][3]);
+    discoveryFacility.add(uniqueDummyDataArray[i][4]);
   }
 
   const planetNameArray = Array.from(planetName);
@@ -57,6 +68,7 @@ const App = () => {
         discoveryMethodArray={discoveryMethodArray}
         discoveryYearArray={discoveryYearArray}
         discoveryFacilityArray={discoveryFacilityArray}
+        uniqueDummyDataArray={uniqueDummyDataArray}
       />
     </div>
   );
