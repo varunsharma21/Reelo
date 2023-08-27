@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import styles from "./Header.module.css";
+import ExoplanetsData from "./ExoplanetsData/ExoplanetsData";
 
 const Header = (props) => {
   const {
-    // planetNameArray,
     hostNameArray,
     discoveryMethodArray,
     discoveryYearArray,
@@ -104,28 +104,31 @@ const Header = (props) => {
     <div className={styles.container}>
       <div className={styles.header}>
         <select
+          id={styles.mySelect1}
           value={hostnameDefaultOption}
           onChange={(event) =>
             handleFilterChange("hostname", event.target.value)
           }
         >
-          {/* <option selected>{defaultLabels.hostname}</option> */}
           {hostNameArray.map((hostName) => (
             <option value={hostName}>{hostName}</option>
           ))}
         </select>
+
         <select
+          id={styles.mySelect2}
           value={discoveryMethodDefaultOption}
           onChange={(event) =>
             handleFilterChange("discoveryMethod", event.target.value)
           }
         >
-          {/* <option selected>{defaultLabels.discoveryMethod}</option> */}
           {discoveryMethodArray.map((discoveryMethodName) => (
             <option value={discoveryMethodName}>{discoveryMethodName}</option>
           ))}
         </select>
+
         <select
+          id={styles.mySelect3}
           value={discoveryYearDefaultOption}
           onChange={(event) =>
             handleFilterChange("discoveryYear", event.target.value)
@@ -134,40 +137,24 @@ const Header = (props) => {
           {discoveryYearArray.map((discoveryYear) => (
             <option value={discoveryYear}>{discoveryYear}</option>
           ))}
-          {/* <option selected>{defaultLabels.discoveryYear}</option> */}
         </select>
+
         <select
+          id={styles.mySelect4}
           value={discoveryFacilityDefaultOption}
           onChange={(event) =>
             handleFilterChange("discoveryFacility", event.target.value)
           }
         >
-          {/* <option selected>{defaultLabels.discoveryFacility}</option> */}
           {discoveryFacilityArray.map((discoveryFacility) => (
             <option value={discoveryFacility}>{discoveryFacility}</option>
           ))}
         </select>
 
         <button onClick={searchHandler}>Search</button>
-        {/* <button>Search</button> */}
         <button onClick={clearHandler}>Clear</button>
       </div>
-      <div>
-        <ul>
-          {/* {console.log(filters.discoveryYear)} */}
-          {filteredData.map((item, idx) => (
-            <div>
-              <p>{item[0]}</p>
-              <p>{item[1]}</p>
-              <p>{item[2]}</p>
-              <p>{item[3]}</p>
-              <p>{item[4]}</p>
-              <br />
-              <br />
-            </div>
-          ))}
-        </ul>
-      </div>
+      <ExoplanetsData filteredData={filteredData} />
     </div>
   );
 };

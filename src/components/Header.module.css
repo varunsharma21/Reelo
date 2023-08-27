@@ -1,4 +1,28 @@
 .header {
   display: flex;
   flex-direction: row;
+  width: 100%;
+  margin-left: 20px;
+}
+
+.header button {
+  margin: 20px 20px 0 0;
+  padding: 3px 5px 3px 5px;
+  border-radius: 5px;
+  border: 1px solid grey;
+  width: 60px;
+  background-color: #1450a3;
+  color: white;
+}
+
+.header select {
+  width: 21%;
+  margin: 20px 20px 0 0;
+  border-radius: 5px;
+  border: 1px solid grey;
+}
+
+.header select option {
+  width: 15%;
+  white-space: normal;
 }
