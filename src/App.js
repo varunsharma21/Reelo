@@ -57,7 +57,7 @@ const App = () => {
   const planetNameArray = Array.from(planetName);
   const hostNameArray = Array.from(hostName);
   const discoveryMethodArray = Array.from(discoveryMethod);
-  const discoveryYearArray = Array.from(discoveryYear).sort();
+  const discoveryYearArray = Array.from(discoveryYear).sort().reverse();
   const discoveryFacilityArray = Array.from(discoveryFacility);
 
   return (

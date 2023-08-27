@@ -2,15 +2,6 @@ import React, { useState } from "react";
 import styles from "./Header.module.css";
 
 const Header = (props) => {
-  const [filters, setFilters] = useState({
-    hostname: "",
-    discoveryMethod: "",
-    discoveryYear: "",
-    discoveryFacility: "",
-  });
-
-  const [filteredData, setFilteredData] = useState([]);
-
   const {
     // planetNameArray,
     hostNameArray,
@@ -20,12 +11,41 @@ const Header = (props) => {
     uniqueDummyDataArray,
   } = props;
 
+  const [filters, setFilters] = useState({
+    hostname: "",
+    discoveryMethod: "",
+    discoveryYear: "",
+    discoveryFacility: "",
+  });
+
+  const [hostnameDefaultOption, setHostnameDefaultOption] = useState(
+    hostNameArray[0]
+  );
+  const [discoveryMethodDefaultOption, setDiscoveryMethodDefaultOption] =
+    useState(discoveryMethodArray[0]);
+  const [discoveryYearDefaultOption, setDiscoveryYearDefaultOption] = useState(
+    discoveryYearArray[0]
+  );
+  const [discoveryFacilityDefaultOption, setDiscoveryFacilityDefaultOption] =
+    useState(discoveryFacilityArray[0]);
+
+  const [filteredData, setFilteredData] = useState([]);
+
   const handleFilterChange = (filterName, value) => {
     setFilters((prevFilters) => ({
       ...prevFilters,
       [filterName]: value,
     }));
-    // console.log(filters);
+
+    if (filterName === "hostname") {
+      setHostnameDefaultOption(value);
+    } else if (filterName === "discoveryMethod") {
+      setDiscoveryMethodDefaultOption(value);
+    } else if (filterName === "discoveryYear") {
+      setDiscoveryYearDefaultOption(value);
+    } else if (filterName === "discoveryFacility") {
+      setDiscoveryFacilityDefaultOption(value);
+    }
   };
 
   const getFilteredData = () => {
@@ -64,28 +84,49 @@ const Header = (props) => {
     console.log(arr);
   }
 
+  function clearHandler() {
+    setFilteredData([]);
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      hostname: "",
+      discoveryMethod: "",
+      discoveryYear: "",
+      discoveryFacility: "",
+    }));
+
+    setHostnameDefaultOption(hostNameArray[0]);
+    setDiscoveryMethodDefaultOption(discoveryMethodArray[0]);
+    setDiscoveryYearDefaultOption(discoveryYearArray[0]);
+    setDiscoveryFacilityDefaultOption(discoveryFacilityArray[0]);
+  }
+
   return (
     <div className={styles.container}>
       <div className={styles.header}>
         <select
+          value={hostnameDefaultOption}
           onChange={(event) =>
             handleFilterChange("hostname", event.target.value)
           }
         >
+          {/* <option selected>{defaultLabels.hostname}</option> */}
           {hostNameArray.map((hostName) => (
             <option value={hostName}>{hostName}</option>
           ))}
         </select>
         <select
+          value={discoveryMethodDefaultOption}
           onChange={(event) =>
             handleFilterChange("discoveryMethod", event.target.value)
           }
         >
+          {/* <option selected>{defaultLabels.discoveryMethod}</option> */}
           {discoveryMethodArray.map((discoveryMethodName) => (
             <option value={discoveryMethodName}>{discoveryMethodName}</option>
           ))}
         </select>
         <select
+          value={discoveryYearDefaultOption}
           onChange={(event) =>
             handleFilterChange("discoveryYear", event.target.value)
           }
@@ -93,12 +134,15 @@ const Header = (props) => {
           {discoveryYearArray.map((discoveryYear) => (
             <option value={discoveryYear}>{discoveryYear}</option>
           ))}
+          {/* <option selected>{defaultLabels.discoveryYear}</option> */}
         </select>
         <select
+          value={discoveryFacilityDefaultOption}
           onChange={(event) =>
             handleFilterChange("discoveryFacility", event.target.value)
           }
         >
+          {/* <option selected>{defaultLabels.discoveryFacility}</option> */}
           {discoveryFacilityArray.map((discoveryFacility) => (
             <option value={discoveryFacility}>{discoveryFacility}</option>
           ))}
@@ -106,12 +150,12 @@ const Header = (props) => {
 
         <button onClick={searchHandler}>Search</button>
         {/* <button>Search</button> */}
-        <button>Clear</button>
+        <button onClick={clearHandler}>Clear</button>
       </div>
       <div>
         <ul>
           {/* {console.log(filters.discoveryYear)} */}
-          {filteredData.map((item) => (
+          {filteredData.map((item, idx) => (
             <div>
               <p>{item[0]}</p>
               <p>{item[1]}</p>
