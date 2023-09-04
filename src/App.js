@@ -2,7 +2,6 @@ import React, { useCallback, useEffect, useState } from "react";
 import Papa from "papaparse";
 
 import DummyData from "./assets/nasa-exoplanet-data-updated.csv";
-// import DummyData from "./assets/dummy-data.csv";
 import Header from "./components/Header";
 
 const App = () => {

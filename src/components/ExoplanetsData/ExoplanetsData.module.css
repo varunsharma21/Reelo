@@ -2,10 +2,15 @@
   display: flex;
   justify-content: center;
   margin-top: 2%;
+  text-align: center;
+  overflow: auto;
+  margin-top: 50px;
+  /* height: 81.5vh; */
+  color: white;
 }
 
 table th {
-  padding: 90px;
+  padding: 40px 90px 40px 90px;
 }
 
 .no-data {
@@ -14,4 +19,5 @@ table th {
   justify-content: center;
   align-items: center;
   margin-top: 300px;
+  color: white;
 }

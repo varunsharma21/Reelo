@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styles from "./Header.module.css";
 import ExoplanetsData from "./ExoplanetsData/ExoplanetsData";
+import { Alert, Snackbar } from "@mui/material";
 
 const Header = (props) => {
   const {
@@ -10,6 +11,8 @@ const Header = (props) => {
     discoveryFacilityArray,
     uniqueDummyDataArray,
   } = props;
+
+  const [showSnackbar, setShowSnackbar] = useState(false);
 
   const [filters, setFilters] = useState({
     hostname: "",
@@ -79,9 +82,19 @@ const Header = (props) => {
   };
 
   function searchHandler() {
-    const arr = getFilteredData();
-    setFilteredData(arr);
-    console.log(arr);
+    if (
+      filters.hostname === "" &&
+      filters.discoveryMethod === "" &&
+      filters.discoveryYear &&
+      filters.discoveryFacility === ""
+    ) {
+      // Show Snackbar
+      setShowSnackbar(true);
+    } else {
+      const arr = getFilteredData();
+      setFilteredData(arr);
+      console.log(arr);
+    }
   }
 
   function clearHandler() {
@@ -153,6 +166,11 @@ const Header = (props) => {
 
         <button onClick={searchHandler}>Search</button>
         <button onClick={clearHandler}>Clear</button>
+        <Snackbar open={showSnackbar} autoHideDuration={6000}>
+          <Alert severity="success" sx={{ width: "100%" }}>
+            Done!
+          </Alert>
+        </Snackbar>
       </div>
       <ExoplanetsData filteredData={filteredData} />
     </div>

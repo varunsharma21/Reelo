@@ -2,7 +2,9 @@ import React from "react";
 import styles from "./ExoplanetsData.module.css";
 
 const ExoplanetsData = (props) => {
-  if (props.filteredData.length > 0) {
+  const filteredData = props.filteredData.slice(1);
+
+  if (filteredData.length > 0) {
     return (
       <div className={styles["exoplanet-info-table"]}>
         <table>
@@ -13,7 +15,7 @@ const ExoplanetsData = (props) => {
             <th>Discovery Year</th>
             <th>Discovery Facility</th>
           </tr>
-          {props.filteredData.map((item) => (
+          {filteredData.map((item) => (
             <tr>
               {item.map((exoplanetInfo) => (
                 <td>{exoplanetInfo}</td>
@@ -37,6 +39,21 @@ const ExoplanetsData = (props) => {
 };
 
 export default ExoplanetsData;
+
+// <ul>
+//         {/* {console.log(filters.discoveryYear)} */}
+//         {props.filteredData.map((item, idx) => (
+//           <div className={styles['exoplanet-info']}>
+//             <p>{item[0]}</p>
+//             <p>{item[1]}</p>
+//             <p>{item[2]}</p>
+//             <p>{item[3]}</p>
+//             <p>{item[4]}</p>
+//             <br />
+//             <br />
+//           </div>
+//         ))}
+//       </ul>
 
 // <ul>
 //         {/* {console.log(filters.discoveryYear)} */}
